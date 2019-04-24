@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>eCAT_ROS</name>
+  <name>ecat_ros</name>
   <version>0.0.0</version>
   <description>The eCAT_ROS package</description>
 

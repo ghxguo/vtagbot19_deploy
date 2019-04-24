@@ -61,7 +61,7 @@ void mainTasks(char *ifname)
             printf("Slaves mapped, state to SAFE_OP.\n");
             /* wait for all slaves to reach SAFE_OP state */
             ec_statecheck(0, EC_STATE_SAFE_OP, EC_TIMEOUTSTATE * 4);
-            for (int k = 0; k < ec_slavecount; i++)
+            for (int k = 0; k < ec_slavecount; k++)
             {
               oloop = ec_slave[k].Obytes;
               if ((oloop == 0) && (ec_slave[k].Obits > 0))
