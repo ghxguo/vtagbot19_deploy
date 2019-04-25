@@ -96,7 +96,8 @@ void loop()                                             // In the main loop we m
 
   EASYCAT.MainTask();                                   // execute the EasyCAT task
   
-  Application();                                        // user applications
+  Application();   
+  delay(10);// user applications
 }
 
 
@@ -130,8 +131,13 @@ void Application ()
     EASYCAT.BufferIn.Byte[12] =  0x9A;                                                   // --- four output bits management ----
     EASYCAT.BufferIn.Byte[13] =  0xBC;
     EASYCAT.BufferIn.Byte[14] =  0xDE;
-    EASYCAT.BufferIn.Byte[15] =  0xFF;                 
-    Serial.println(EASYCAT.BufferOut.Byte[0]);          
-
+    EASYCAT.BufferIn.Byte[15] =  0xFF; 
+    for (int i = 0; i < 16; i++)
+    {
+      int data = (EASYCAT.BufferOut.Byte[i*2] << 8) | EASYCAT.BufferOut.Byte[i*2+1]; 
+      Serial.print(data);
+      Serial.print(',');
+    }                
+    Serial.println();
   }   
 }
