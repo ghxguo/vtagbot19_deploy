@@ -21,8 +21,7 @@
 
 int eCAT_Data[16];
 void arrayCallback(const std_msgs::Int16MultiArray::ConstPtr& array);
-int oloop[];
-int iloop[];
+
 int8_t masterOutArray[32];
 
 int main(int argc, char **argv)
@@ -79,6 +78,10 @@ void mainTasks(char *ifname)
       printf("Slaves mapped, state to SAFE_OP.\n");
       /* wait for all slaves to reach SAFE_OP state */
       ec_statecheck(0, EC_STATE_SAFE_OP, EC_TIMEOUTSTATE * 4);
+
+	int oloop[ec_slavecount];
+	int iloop[ec_slavecount];
+
       for(int k = 0; k<ec_slavecount; k++)
       {
         oloop[k] = ec_slave[k].Obytes;
@@ -149,10 +152,11 @@ void mainTasks(char *ifname)
               printf("Slave %d State=0x%2.2x StatusCode=0x%4.4x : %s\n",
               k, ec_slave[k].state, ec_slave[k].ALstatuscode, ec_ALstatuscode2string(ec_slave[k].ALstatuscode));
               printf("\nRequest init state for all slaves\n");
-              ec_slave[k].state = EC_STATE_INIT;
+              //ec_slave[k].state = EC_STATE_INIT;
 
               /* request INIT state for all slaves */
-              ec_writestate(k);
+              //ec_writestate(k);
+//ec_configdc();
             }
           }
 
@@ -178,9 +182,9 @@ void mainTasks(char *ifname)
 
 void arrayCallback(const std_msgs::Int16MultiArray::ConstPtr& array)
 {
-  std::fill( masterOutArray, masterOutArray + sizeof( masterOutArray ), 0 );
   int size = sizeof(array->data);
   int k = 0;
+std::fill( masterOutArray, masterOutArray + sizeof( masterOutArray ), 0 );
   for (int i = 0; i < size; i++)
   {
     masterOutArray[k] = (int8_t)(array->data[i] >> 8);
