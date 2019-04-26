@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="joy" type="joy_node" name="joy" />
+  <node pkg="joyControl" type="joyTranslate.py" name="translate" />
+  <!-- <node pkg="tcp_to_arduino_example" type="send_data_to_arduino_service.py" name="setupPedalTCP" /> -->
+  <!-- <node pkg="tcp_to_arduino_example" type="send_data_to_arduino_service_sample_client.py" name="dxlControlTCP" /> -->
+</launch>
