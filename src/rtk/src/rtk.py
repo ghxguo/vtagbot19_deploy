@@ -6,7 +6,7 @@ import socket
 from socket import error as socket_error
 
 ###Trimble TCP Connection Initialization
-TCP_IP = '10.18.18.18'
+TCP_IP = '10.18.18.3'
 
 TCP_PORT = 5017 #this is the port number inside the trimble configuration
 
