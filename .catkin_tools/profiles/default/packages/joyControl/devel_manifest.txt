@@ -1,0 +1,5 @@
+joyControl
+/home/hongxu/vtagbot19_deploy/devel/.private/joyControl/cmake.lock /home/hongxu/vtagbot19_deploy/devel/./cmake.lock
+/home/hongxu/vtagbot19_deploy/devel/.private/joyControl/lib/pkgconfig/joyControl.pc /home/hongxu/vtagbot19_deploy/devel/lib/pkgconfig/joyControl.pc
+/home/hongxu/vtagbot19_deploy/devel/.private/joyControl/share/joyControl/cmake/joyControlConfig.cmake /home/hongxu/vtagbot19_deploy/devel/share/joyControl/cmake/joyControlConfig.cmake
+/home/hongxu/vtagbot19_deploy/devel/.private/joyControl/share/joyControl/cmake/joyControlConfig-version.cmake /home/hongxu/vtagbot19_deploy/devel/share/joyControl/cmake/joyControlConfig-version.cmake
