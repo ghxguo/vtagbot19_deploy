@@ -16,4 +16,5 @@
       publish_novatel_velocity: true
     </rosparam>
   </node>
+  <node pkg="rtk" type="rtk.py" name="rtk"/>
 </launch>
