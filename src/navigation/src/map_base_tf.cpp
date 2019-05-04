@@ -46,20 +46,24 @@ void fix_callback(const nav_msgs::Odometry::ConstPtr &odom)
     fakeOdomMes.pose.pose.orientation.z = q.getZ();
     fakeOdomMes.pose.pose.orientation.w = q.getW();
 
-
 }
 
-void imu_callback(const novatel_gps_msgs::Inspva::ConstPtr &imu_msg)
+void heading_callback(const novatel_gps_msgs::Inspva::ConstPtr &novatel_msg)
 {
 
     static tf::TransformBroadcaster br;
     tf::Quaternion q;
-    q.setRPY(0.0, 0.0, imu_msg->azimuth);
+    q.setRPY(0.0, 0.0, novatel_msg->azimuth);
     tf::Transform transform;
     transform.setOrigin(tf::Vector3((x - xZero), (y - yZero), 0.0));
     transform.setRotation(q);
     //ROS_INFO("%s", "SentTF****************************");
     br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "base_link"));
+}
+
+void imu_callback(const sensor_msgs::Imu::ConstPtr &imu_msg)
+{
+    fakeOdomMes.twist.twist.angular = imu_msg->angular_velocity;
 }
 
 int main(int argc, char **agrv)
@@ -70,9 +74,10 @@ int main(int argc, char **agrv)
     fakeOdomMes.header.frame_id = "/odom";
     
     auto fix_sub = nh.subscribe("UTM", 50, fix_callback);
-    auto imu_sub = nh.subscribe("inspva", 50, imu_callback);
+    auto heading_sub = nh.subscribe("inspva", 50, heading_callback);
     auto fake_odom = nh.advertise<nav_msgs::Odometry>("odom", 50);
     auto vel_sub = nh.subscribe("fix_velocity", 50, vel_callback);
+    auto imu_sub = nh.subscribe("compiled_imu", 50, imu_callback);
     ros::spinOnce();
     ros::Rate loop_rate(100);
     while (ros::ok())

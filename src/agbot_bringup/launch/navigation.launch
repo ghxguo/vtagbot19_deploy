@@ -7,14 +7,6 @@
   <include file="$(find agbot_bringup)/launch/static_tf.launch" />
 
 
-  <node pkg="atvsim_control" type="controller_adaptor" name="adaptor" >
-    <remap to="/steering_cmd" from="/steering_pos_cmd"/>
-    <remap to="/speed_setpoint" from="pedal_cmd"/>
-  </node>
-  <node pkg="post_gazebo" type="post_gazebo" name="post_gazebo_node" >
-    <remap to="/novatel_imu" from="/IMU_rpy"/>
-  </node>
-
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find navigation)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
     <rosparam file="$(find navigation)/costmap_common_params.yaml" command="load" ns="local_costmap" />
@@ -29,7 +21,22 @@
 
  </node>
 
+
+    <node name="speed_pid" pkg="pid" type="controller" >
+      <param name="Kp" value="5.0" />
+      <param name="Ki" value="0.1" />
+      <param name="Kd" value="0.01" />
+      <param name="topic_from_controller" value="pedal_effort" />
+      <param name="topic_from_plant" value="speed_feedback" />
+      <param name="setpoint_topic" value="speed_setpoint" />
+      <param name="upper_limit" value="1000" />
+      <param name="lower_limit" value="-1000" />
+      <param name="windup_limit" value="10" />
+      <param name="max_loop_frequency" value="100.0" />
+      <param name="min_loop_frequency" value="100.0" />
+    </node>
+
   <node pkg="rviz" type="rviz" name="rviz"
-    args="-d $(find atvsim_gazebo)/launch/agbot_rivz.rviz"/>
+    args="-d $(find agbot_bringup)/launch/agbot_rivz.rviz"/>
 
 </launch>
