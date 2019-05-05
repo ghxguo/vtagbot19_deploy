@@ -18,4 +18,5 @@
     </rosparam>
   </node>
   <node pkg="rtk" type="rtk.py" name="rtk_imu"/>
+  <node pkg="novatel_imu_parser" type="imu_parser" name="imu_converter"/>
 </launch>

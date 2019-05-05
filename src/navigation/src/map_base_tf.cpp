@@ -81,7 +81,7 @@ int main(int argc, char **agrv)
     auto heading_sub = nh.subscribe("inspva", 50, heading_callback);
     auto fake_odom = nh.advertise<nav_msgs::Odometry>("odom", 50);
     auto vel_sub = nh.subscribe("bestvel", 50, vel_callback);
-    auto imu_sub = nh.subscribe("imu", 50, imu_callback);
+    auto imu_sub = nh.subscribe("compiled_imu", 50, imu_callback);
     ros::spinOnce();
     ros::Rate loop_rate(100);
     while (ros::ok())
