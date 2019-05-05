@@ -5,6 +5,7 @@
 #include <std_msgs/Float64.h>
 #include <math.h>
 #include <novatel_gps_msgs/Inspva.h>
+#include <novatel_gps_msgs/NovatelVelocity.h>
 #include <sensor_msgs/Imu.h>
 
 double x = 0;
@@ -15,12 +16,13 @@ double yZero = 0;
 nav_msgs::Odometry fakeOdomMes;
 geometry_msgs::Point32 imuHeading;
 
-
-void vel_callback(const geometry_msgs::Vector3Stamped::ConstPtr &msg)
+//set the gps velocity as odometry.twist 
+void vel_callback(const novatel_gps_msgs::NovatelVelocity::ConstPtr &msg)
 {
-    fakeOdomMes.twist.twist.linear.x = sqrt(msg->vector.x * msg->vector.x + msg->vector.y * msg->vector.y);
-
+    fakeOdomMes.twist.twist.linear.x = msg->horizontal_speed;
 }
+
+//use the UTM odom to create a odom which starts from the origin (0, 0)
 void fix_callback(const nav_msgs::Odometry::ConstPtr &odom)
 {
     static bool init = false;
@@ -37,7 +39,7 @@ void fix_callback(const nav_msgs::Odometry::ConstPtr &odom)
     fakeOdomMes.pose.pose.position.z = 0;
     fakeOdomMes.pose.covariance = geometry_msgs::PoseWithCovariance::_covariance_type();
     fakeOdomMes.twist.covariance = geometry_msgs::PoseWithCovariance::_covariance_type();
-    
+    //also publish the transform between base and map/world
     tf::Quaternion q;
     q.setRPY(imuHeading.x, imuHeading.y, imuHeading.z);
     
@@ -48,6 +50,7 @@ void fix_callback(const nav_msgs::Odometry::ConstPtr &odom)
 
 }
 
+//publish the rotation part of the transform from base to map/world
 void heading_callback(const novatel_gps_msgs::Inspva::ConstPtr &novatel_msg)
 {
 
@@ -61,6 +64,7 @@ void heading_callback(const novatel_gps_msgs::Inspva::ConstPtr &novatel_msg)
     br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "base_link"));
 }
 
+//use the velocity info from the imu as odom.twist.angular
 void imu_callback(const sensor_msgs::Imu::ConstPtr &imu_msg)
 {
     fakeOdomMes.twist.twist.angular = imu_msg->angular_velocity;
@@ -76,8 +80,8 @@ int main(int argc, char **agrv)
     auto fix_sub = nh.subscribe("UTM", 50, fix_callback);
     auto heading_sub = nh.subscribe("inspva", 50, heading_callback);
     auto fake_odom = nh.advertise<nav_msgs::Odometry>("odom", 50);
-    auto vel_sub = nh.subscribe("fix_velocity", 50, vel_callback);
-    auto imu_sub = nh.subscribe("compiled_imu", 50, imu_callback);
+    auto vel_sub = nh.subscribe("bestvel", 50, vel_callback);
+    auto imu_sub = nh.subscribe("imu", 50, imu_callback);
     ros::spinOnce();
     ros::Rate loop_rate(100);
     while (ros::ok())
