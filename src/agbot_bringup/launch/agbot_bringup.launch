@@ -1,5 +1,4 @@
 <launch>
   <include file="$(find agbot_bringup)/launch/navigation.launch" />
   <include file="$(find agbot_bringup)/launch/novatel_gps.launch" />
-  <node pkg="rtk" type="rtk.py" name="rtk_imu">
 </launch>
