@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     }
     if(speed_setpoint < 0.1)
     {
-      effort.data = -600;
+      effort.data = -500;
     }
     pedal_pub.publish(effort);
     ros::spinOnce();
