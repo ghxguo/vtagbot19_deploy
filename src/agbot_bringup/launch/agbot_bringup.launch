@@ -2,4 +2,5 @@
   <include file="$(find agbot_bringup)/launch/navigation.launch" />
   <include file="$(find agbot_bringup)/launch/novatel_gps.launch" />
   <include file="$(find agbot_bringup)/launch/lidar.launch" />
+  <include file="$(find agbot_bringup)/launch/speed_control.launch" />
 </launch>

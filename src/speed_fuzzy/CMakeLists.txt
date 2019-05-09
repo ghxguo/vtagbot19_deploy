@@ -198,3 +198,6 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(speed_control src/speed_control.cpp)
+target_link_libraries(speed_control ${catkin_LIBRARIES})

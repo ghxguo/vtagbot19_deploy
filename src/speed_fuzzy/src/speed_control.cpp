@@ -1,35 +1,51 @@
 #include <ros/ros.h>
-#include <std_msgs/Float64>
-#include <novatel_msgs/NovatelVelocity.h>
+#include <std_msgs/Float64.h>
+#include <std_msgs/UInt16.h>
+#include <novatel_gps_msgs/NovatelVelocity.h>
 
 float speed_fb = 0;
-float setpoint = 0;
-void speed_cb(const novatel_msgs::NovatelVelocity::ConstPtr& vel)
+float  speed_setpoint= 0;
+double bw = 0;
+int pedal_acc = 0;
+int pedal_dec = 0;
+int pedal_const = 0;
+void speed_cb(const novatel_gps_msgs::NovatelVelocity::ConstPtr& vel)
 {
-  speed_fb = vel.horizontal_speed;
+  speed_fb = vel->horizontal_speed;
 }
-void setpoint_cb(const std_msgs::Float64::ConstPtr& setpoint)
+void speed_setpoint_cb(const std_msgs::Float64::ConstPtr& setpoint)
 {
-  setpoint = setpoint.data;
+  speed_setpoint = setpoint->data;
 }
 int main(int argc, char* argv[])
 {
   ros::init(argc, argv, "speed_fuzzy");
   ros::NodeHandle n;
   ros::Rate loop_rate(100);
-  ros::Publisher pedal_pub = n.advertise<std_msgs::Float64>("pedal_effort", 1000);
+  ros::Publisher pedal_pub = n.advertise<std_msgs::UInt16>("pedal_effort", 1000);
   ros::Subscriber speed_sub = n.subscribe("bestvel", 1000, speed_cb);
-  ros::Subscriber setpoint_sub = n.subscribe("speed_setpoint", 1000, setpoint_cb);
+  ros::Subscriber speed_setpoint_sub = n.subscribe("speed_speed_setpoint", 1000, speed_setpoint_cb);
   std_msgs::Float64 effort;
   while(ros::ok())
   {
-    float error = speed_set - speed_feedback
-if error < 0 - speed_set*byPassBandWidth:
-    msg.pedal_percent = byPassPedalPosMin
-elif error > speed_set*byPassBandWidth:
-    msg.pedal_percent = byPassPedalPosMax
-else:
-msg.pedal_percent = (byPassPedalPosMax + byPassPedalPosMin)/2
+    n.param("bandwidth", bw,0.0);
+    n.param("pedal_high", pedal_acc, 0);
+    n.param("pedal_low", pedal_dec, 0);
+    n.param("pedal_const", pedal_const, 0);
+
+    float error = speed_setpoint - speed_fb;
+    if (error < 0 - speed_setpoint*bw)
+    {
+      effort.data = pedal_dec;
+    }
+    else if (error > speed_setpoint*bw)
+    {
+      effort.data = pedal_acc;
+    }
+    else
+    {
+      effort.data = pedal_const;
+    }
     pedal_pub.publish(effort);
     ros::spinOnce();
     loop_rate.sleep();
