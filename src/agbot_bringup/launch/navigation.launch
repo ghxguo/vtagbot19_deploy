@@ -22,11 +22,11 @@
  </node>
 
 
-    <node name="speed_pid" pkg="pid" type="controller" >
+   <!-- <node name="speed_pid" pkg="pid" type="controller" >
       <param name="Kp" value="25" />
       <param name="Ki" value="1" />
       <param name="Kd" value="35" />
-    <!-- <node name="speed_pid" pkg="pid" type="controller" >
+      <node name="speed_pid" pkg="pid" type="controller" >
       <param name="Kp" value="5.0" />
       <param name="Ki" value="0.1" />
       <param name="Kd" value="0.01" />

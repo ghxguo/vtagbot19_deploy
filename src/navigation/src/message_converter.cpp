@@ -33,10 +33,10 @@ void move_base_cmd_Callback(const geometry_msgs::Twist::ConstPtr &msg)
 	static ros::NodeHandle n;
 	static auto speed_setpoint_pub = n.advertise<std_msgs::Float64>("speed_setpoint", 100);
 	int16msg.data[0] = msg->angular.z / 0.4363 * 1000;
-	int temp = 0 - msg->angular.z / 0.4363 * 1000;
-	ROS_INFO("Temp: %d", temp);
+	//int temp = 0 - msg->angular.z / 0.4363 * 1000;
+	//ROS_INFO("Temp: %d", temp);
 	int16msg.data[0] = -int16msg.data[0];
-	ROS_INFO("Data: %d", int16msg.data[0]);
+	//ROS_INFO("Data: %d", int16msg.data[0]);
 	std_msgs::Float64 speed;
 	speed.data = msg->linear.x;
 	speed_setpoint_pub.publish(speed);
@@ -45,7 +45,7 @@ void move_base_cmd_Callback(const geometry_msgs::Twist::ConstPtr &msg)
 //set the pedal effort from pid to multy array
 void pedal_callback(const std_msgs::Float64::ConstPtr &msg)
 {
-	int16msg.data[1] = msg->data * 10;
+	int16msg.data[1] = msg->data;
 }
 
 int main(int argc, char **argv)

@@ -28,12 +28,13 @@ int main(int argc, char* argv[])
   std_msgs::Float64 effort;
   while(ros::ok())
   {
-    n.param("bandwidth", bw,0.0);
-    n.param("pedal_high", pedal_acc, 0);
-    n.param("pedal_low", pedal_dec, 0);
-    n.param("pedal_const", pedal_const, 0);
-
+    n.param<double>("/speed_control/bandwidth", bw, 0.1);
+    n.param("/speed_control/pedal_high", pedal_acc, 0);
+    n.param("/speed_control/pedal_low", pedal_dec, 0);
+    n.param("/speed_control/pedal_const", pedal_const, 0);
+    // ROS_INFO("bandwidth: %f", bw);
     float error = speed_setpoint - speed_fb;
+    // ROS_INFO("error: %f,", error);
     if (error < 0 - speed_setpoint*bw)
     {
       effort.data = pedal_dec;
@@ -45,6 +46,10 @@ int main(int argc, char* argv[])
     else
     {
       effort.data = pedal_const;
+    }
+    if(speed_setpoint < 0.1)
+    {
+      effort.data = -600;
     }
     pedal_pub.publish(effort);
     ros::spinOnce();

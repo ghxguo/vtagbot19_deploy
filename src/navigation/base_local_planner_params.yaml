@@ -26,9 +26,9 @@ TebLocalPlannerROS:
          
  max_vel_x: 2
  max_vel_x_backwards: 0.0
- max_vel_theta: 1.2
+ max_vel_theta: 0.3
  acc_lim_x: 1.0
- acc_lim_theta: 0.52
+ acc_lim_theta: 0.1
  min_turning_radius: 4.8
  wheelbase: 2.0
  cmd_angle_instead_rotvel: True
@@ -41,7 +41,7 @@ TebLocalPlannerROS:
    front_radius: 1.5 # for type "two_circles"
    rear_offset: 1.0 # for type "two_circles"
    rear_radius: 1.5 # for type "two_circles"
-   vertices: [ [-0.8, -1.7], [-0.8, 1.7], [0.8, 1.7], [0.8, -1.7] ] # for type "polygon"
+   vertices: [ [-1.7, -0.8], [1.7, -0.8], [1.7, 0.8], [-1.7, 0.8] ] # for type "polygon"
 
  # GoalTolerance
     
