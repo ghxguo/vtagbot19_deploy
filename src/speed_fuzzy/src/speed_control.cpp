@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
   ros::Rate loop_rate(100);
   ros::Publisher pedal_pub = n.advertise<std_msgs::Float64>("pedal_effort", 1000);
   ros::Subscriber speed_sub = n.subscribe("bestvel", 1000, speed_cb);
-  ros::Subscriber speed_setpoint_sub = n.subscribe("speed_speed_setpoint", 1000, speed_setpoint_cb);
+  ros::Subscriber speed_setpoint_sub = n.subscribe("speed_setpoint", 1000, speed_setpoint_cb);
   std_msgs::Float64 effort;
   while(ros::ok())
   {
