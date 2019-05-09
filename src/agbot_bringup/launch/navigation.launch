@@ -3,11 +3,7 @@
   <remap from="/odom" to="/UTM"/>
   </node>
   <node pkg="navigation" type="map_base_tf_node" name="map_base_transform_publisher" />
-<<<<<<< HEAD
   <node pkg="navigation" type="message_converter" name="deploy_adaper" />
-=======
-
->>>>>>> 7af9b5791fbbb0e7ff6b6243c2b01d6de9ae91b8
   <include file="$(find agbot_bringup)/launch/static_tf.launch" />
 
 
@@ -26,17 +22,14 @@
  </node>
 
 
-<<<<<<< HEAD
     <node name="speed_pid" pkg="pid" type="controller" >
       <param name="Kp" value="25" />
       <param name="Ki" value="1" />
       <param name="Kd" value="35" />
-=======
     <!-- <node name="speed_pid" pkg="pid" type="controller" >
       <param name="Kp" value="5.0" />
       <param name="Ki" value="0.1" />
       <param name="Kd" value="0.01" />
->>>>>>> 7af9b5791fbbb0e7ff6b6243c2b01d6de9ae91b8
       <param name="topic_from_controller" value="pedal_effort" />
       <param name="topic_from_plant" value="speed_feedback" />
       <param name="setpoint_topic" value="speed_setpoint" />
