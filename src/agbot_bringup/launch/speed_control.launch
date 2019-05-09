@@ -1,0 +1,8 @@
+<launch>
+  <node name="speed_control" pkg="speed_fuzzy" type="speed_control" output="screen" >
+    <param name="pedal_high" value=300 />
+    <param name="pedal_low" value=200 />
+    <param name="pedal_const" value=250 />
+    <param name="bandwidth" value=0.2 />
+  </node>
+</launch>

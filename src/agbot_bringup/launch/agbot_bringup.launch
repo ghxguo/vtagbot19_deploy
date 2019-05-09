@@ -2,5 +2,9 @@
   <include file="$(find agbot_bringup)/launch/navigation.launch" />
   <include file="$(find agbot_bringup)/launch/novatel_gps.launch" />
   <include file="$(find agbot_bringup)/launch/lidar.launch" />
+<<<<<<< HEAD
  <!-- <node pkg="ecat_ros" type="ecat_ros_node" name="agbot_controller_node" />-->
+=======
+  <include file="$(find agbot_bringup)/launch/speed_control.launch" />
+>>>>>>> 7af9b5791fbbb0e7ff6b6243c2b01d6de9ae91b8
 </launch>
