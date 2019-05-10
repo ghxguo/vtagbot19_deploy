@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   novatel_gps_msgs
+  sensor_msgs
 )
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 ## System dependencies are found with CMake's conventions
@@ -201,6 +202,9 @@ include_directories(
 # catkin_add_nosetests(test)
 add_executable(map_base_tf_node src/map_base_tf.cpp )
 add_executable(message_converter src/message_converter.cpp )
+add_executable(laser_filter src/laser_filter.cpp)
+
 
 target_link_libraries(map_base_tf_node ${catkin_LIBRARIES})
 target_link_libraries(message_converter ${catkin_LIBRARIES})
+target_link_libraries(laser_filter ${catkin_LIBRARIES})

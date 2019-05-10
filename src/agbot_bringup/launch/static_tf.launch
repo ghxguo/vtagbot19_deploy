@@ -1,5 +1,5 @@
 <launch>
-    <node pkg="tf" type="static_transform_publisher" name="laser_frame" args="0 0 0 0 0 0 base_link hokuyo_link 100" />
+    <node pkg="tf" type="static_transform_publisher" name="laser_frame" args="0 2.4 0.95 0 0 0 base_link hokuyo_link 100" />
 	<node pkg="tf" type="static_transform_publisher" name="imu_frame" args="0 0 0 0 0 0 base_link imu_link 100" />
     <node pkg="tf" type="static_transform_publisher" name="fixed_map" args="0 0 0 0 0 0 world map 200" />
     <node pkg="tf" type="static_transform_publisher" name="fake_odom_tf" args="0 0 0 0 0 0 map odom 200" />
