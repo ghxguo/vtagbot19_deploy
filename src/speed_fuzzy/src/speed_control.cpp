@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     {
       effort.data = pedal_const;
     }
-    if(speed_setpoint < 0.1)
+    if( speed_setpoint > -0.1 && speed_setpoint < 0.01)
     {
       effort.data = -500;
     }
