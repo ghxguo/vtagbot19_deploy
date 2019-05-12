@@ -1,6 +1,4 @@
 <launch>
     <node pkg="swri_transform_util" type="initialize_origin.py" name="swri_origin" />
     <node pkg="mapviz" type="mapviz" name="mapviz_node" output="screen" respawn="true"/> 
-    
-<launch/>
-
+</launch>
