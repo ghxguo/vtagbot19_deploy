@@ -21,7 +21,7 @@ geometry_msgs::Quaternion orientationBetween(geometry_msgs::Point pt1, geometry_
 	double x_d = pt1.x - pt2.y;
 	double y_d = pt1.y - pt2.y;
 	double angle = atan2(x_d, y_d);
-	//angle += M_PI / 2;
+	angle += M_PI / 2;
 	tf::Quaternion q;
 	q.setRPY(0.0, 0.0, angle);
 	geometry_msgs::Quaternion gq;
@@ -62,6 +62,8 @@ void pt_cb(const geometry_msgs::PointStamped::ConstPtr &msg)
 		auto q = orientationBetween(wp_path.poses[wp_path.poses.size() - 2].pose.position, wp_path.poses.back().pose.position);;
 		wp_path.poses[wp_path.poses.size() - 1].pose.orientation = q;
 	}
+	// auto q = orientationBetween(poseData.position, msg->point);
+	// wp_path.poses[wp_path.poses.size() - 1].pose.orientation = q;
 	else if(wp_path.poses.size() == 1)
 	{
 		auto q = orientationBetween(poseData.position, msg->point);
