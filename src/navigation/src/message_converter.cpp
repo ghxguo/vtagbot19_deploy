@@ -23,7 +23,7 @@ void move_base_cmd_Callback(const geometry_msgs::Twist::ConstPtr &msg)
 {
 	static ros::NodeHandle n;
 	static auto speed_setpoint_pub = n.advertise<std_msgs::Float64>("speed_setpoint", 100);
-	int16msg.data[0] = msg->angular.z / 0.4363 * 1000;
+	int16msg.data[0] = - msg->angular.z / 0.4363 * 1000;
 	std_msgs::Float64 speed;
 	speed.data = msg->linear.x;
 	// if (msg->linear.x < 0.0)
