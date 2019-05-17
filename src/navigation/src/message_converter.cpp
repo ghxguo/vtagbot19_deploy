@@ -7,7 +7,7 @@
 #include <novatel_gps_msgs/NovatelVelocity.h>
 
 std_msgs::Int16MultiArray int16msg;
-bool backup = false;
+//bool backup = false;
 //convert from novatel velocity msg to float64 for pid feedback
 void vel_callback(const novatel_gps_msgs::NovatelVelocity::ConstPtr &msg)
 {
@@ -25,20 +25,21 @@ void move_base_cmd_Callback(const geometry_msgs::Twist::ConstPtr &msg)
 	static auto speed_setpoint_pub = n.advertise<std_msgs::Float64>("speed_setpoint", 100);
 	int16msg.data[0] = msg->angular.z / 0.4363 * 1000;
 	std_msgs::Float64 speed;
+	speed.data = msg->linear.x;
+	// if (msg->linear.x < 0.0)
+	// {
 
-	if (msg->linear.x < 0.0)
-	{
+	// 	backup = true;
+	// 	speed.data = 1.0;
+	// 	int16msg.data[0] = 900;
+	// }
+	// else
+	// {
+	// 	backup = false;
+	// 	speed.data = msg->linear.x;
+	// 	int16msg.data[0] = -int16msg.data[0];
+	// }
 
-		backup = true;
-		speed.data = 1.0;
-		int16msg.data[0] = 900;
-	}
-	else
-	{
-		backup = false;
-		speed.data = msg->linear.x;
-		int16msg.data[0] = -int16msg.data[0];
-	}
 	speed_setpoint_pub.publish(speed);
 }
 
