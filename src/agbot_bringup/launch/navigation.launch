@@ -28,6 +28,9 @@
 
  </node>
 
+   <node pkg="wp_publisher" type="wp_publisher_pub" name="waypoint_publisher" />
+    <node pkg="wp_publisher" type="wp_publisher_viz" name="waypoint_viz_and_receiver" /> 
+
 
    <!-- <node name="speed_pid" pkg="pid" type="controller" >
       <param name="Kp" value="25" />
